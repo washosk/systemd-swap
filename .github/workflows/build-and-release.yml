@@ -23,11 +23,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y make fpm ruby-dev build-essential
+          sudo apt install -y make ruby-dev build-essential
 
       - name: Install FPM
         run: |
-          sudo gem install fpm
+          sudo gem install --no-document fpm
 
       - name: Build all packages
         run: |
