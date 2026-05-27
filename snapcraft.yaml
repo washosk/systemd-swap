@@ -1,0 +1,111 @@
+name: systemd-swap
+version: "1.0.0"
+summary: Simple swap file manager for systemd
+description: |
+  systemd-swap is a lightweight utility to manage swap files on Linux systems.
+
+  Features:
+  - Automatic swap file creation
+  - Configuration-driven setup
+  - systemd service integration
+  - Support for multiple architectures
+
+  Installation note: This snap requires elevated privileges. Install with:
+    sudo snap install systemd-swap
+
+base: core22
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+    run-on: amd64
+  - build-on: arm64
+    run-on: arm64
+
+license: MIT
+
+contact: support@share.inc
+issues: https://github.com/washosk/systemd-swap/issues
+website: https://github.com/washosk/systemd-swap
+
+# Required plugs/interfaces for swap management
+plugs:
+  system-backup:
+    interface: system-files
+    read:
+      - /etc/systemd/swap.conf
+    write:
+      - /etc/systemd/swap.conf
+  swapfile-access:
+    interface: system-files
+    read:
+      - /
+    write:
+      - /swapfile
+
+# Applications exposed by the snap
+apps:
+  systemd-swap:
+    command: usr/local/bin/systemd-swap
+    plugs:
+      - system-files
+      - system-backup
+      - swapfile-access
+    daemon: simple
+    restart-condition: always
+
+# Parts: what to build and how
+parts:
+  systemd-swap:
+    plugin: dump
+    source: .
+    source-type: local
+
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/local/bin
+      mkdir -p $SNAPCRAFT_PART_INSTALL/etc/systemd
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/systemd/system
+
+      cp systemd-swap $SNAPCRAFT_PART_INSTALL/usr/local/bin/
+      chmod 0755 $SNAPCRAFT_PART_INSTALL/usr/local/bin/systemd-swap
+
+      cp swap.conf $SNAPCRAFT_PART_INSTALL/etc/systemd/
+      chmod 0644 $SNAPCRAFT_PART_INSTALL/etc/systemd/swap.conf
+
+      cp systemd-swap.service $SNAPCRAFT_PART_INSTALL/usr/lib/systemd/system/
+      chmod 0644 $SNAPCRAFT_PART_INSTALL/usr/lib/systemd/system/systemd-swap.service
+
+  # Runtime dependencies
+  bash:
+    plugin: nil
+    build-packages:
+      - bash
+    stage:
+      - bin/bash
+      - usr/bin/env
+      - usr/share/locale
+
+# Security and permissions
+security:
+  apparmor:
+    - profile: default
+    - deny-missing-apparmor-profile: false
+
+# Snap metadata
+content: |
+  version: "1.0.0"
+  layout:
+    /etc/systemd:
+      bind: $SNAP/etc/systemd
+    /swapfile:
+      bind-file: /tmp/swapfile
+
+# Store metadata
+screenshots:
+  - url: https://raw.githubusercontent.com/washosk/systemd-swap/main/docs/screenshot.png
+    width: 1024
+    height: 768
+
+# Testing
+# Test with: snap install --devmode --dangerous systemd-swap_1.0.0_*.snap

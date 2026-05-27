@@ -1,0 +1,26 @@
+#!/bin/bash
+# Post-uninstall script for Debian package
+
+set -e
+
+if [ "$1" = "remove" ]; then
+    echo "🧹 Removing systemd-swap service..."
+
+    # Stop the service if running
+    if [ -x /bin/systemctl ]; then
+        systemctl disable --now systemd-swap 2>/dev/null || true
+        systemctl daemon-reload
+    fi
+
+    echo "✅ systemd-swap removed"
+    echo "⚠️  Configuration file retained at /etc/systemd/swap.conf"
+    echo "   To remove it, run: sudo rm /etc/systemd/swap.conf"
+fi
+
+if [ "$1" = "purge" ]; then
+    # Remove configuration on full purge
+    rm -f /etc/systemd/swap.conf
+    echo "✅ Configuration removed"
+fi
+
+exit 0

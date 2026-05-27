@@ -1,0 +1,52 @@
+# Docker Compose for systemd-swap
+# For testing and local development
+
+version: "3.8"
+
+services:
+  systemd-swap:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: systemd-swap-dev
+    image: systemd-swap:latest
+
+    # Run in privileged mode for swap management
+    privileged: true
+
+    # Keep container running
+    stdin_open: true
+    tty: true
+
+    # Mount swap file location
+    volumes:
+      - /tmp/swap:/swapfile  # Host path for swap file
+      - /etc/systemd:/etc/systemd  # Persist config
+
+    # Environment variables (override via .env)
+    environment:
+      SWAP_FILE: /swapfile
+      SWAP_SIZE: 1G
+      SWAP_PRIO: 50
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Resource limits (optional)
+    # mem_limit: 512m
+    # cpus: '0.5'
+
+    # Logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: monitoring service
+  # monitor:
+  #   image: busybox
+  #   entrypoint: /bin/sh
+  #   command: -c "while true; do echo 'Swap status:'; swapon --show 2>/dev/null || echo 'Swap inactive'; sleep 10; done"
+  #   depends_on:
+  #     - systemd-swap

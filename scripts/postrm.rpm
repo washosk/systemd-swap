@@ -1,0 +1,20 @@
+#!/bin/bash
+# Post-uninstall script for RPM package
+
+set -e
+
+if [ $1 -eq 0 ]; then
+    echo "🧹 Removing systemd-swap service..."
+
+    # Stop the service if running
+    if [ -x /usr/bin/systemctl ]; then
+        /usr/bin/systemctl disable --now systemd-swap 2>/dev/null || true
+        /usr/bin/systemctl daemon-reload
+    fi
+
+    echo "✅ systemd-swap removed"
+    echo "⚠️  Configuration file retained at /etc/systemd/swap.conf"
+    echo "   To remove it, run: sudo rm /etc/systemd/swap.conf"
+fi
+
+exit 0

@@ -1,0 +1,36 @@
+#!/bin/bash
+# Post-install script for RPM package
+
+set -e
+
+if [ $1 -eq 1 ]; then
+    echo "⚙️  Configuring systemd-swap..."
+
+    # Reload systemd daemon
+    if [ -x /usr/bin/systemctl ]; then
+        /usr/bin/systemctl daemon-reload
+    fi
+
+    # Create swap file directory if it doesn't exist
+    SWAP_FILE="${SWAP_FILE:-/swapfile}"
+    SWAP_DIR=$(dirname "$SWAP_FILE")
+    if [ ! -d "$SWAP_DIR" ]; then
+        mkdir -p "$SWAP_DIR"
+        chmod 755 "$SWAP_DIR"
+    fi
+
+    echo "✅ Post-installation complete"
+    echo "📝 Configuration: /etc/systemd/swap.conf"
+    echo ""
+    echo "To start the service, run:"
+    echo "  sudo systemctl start systemd-swap"
+    echo ""
+    echo "To enable at boot:"
+    echo "  sudo systemctl enable systemd-swap"
+    echo ""
+    echo "To check status:"
+    echo "  sudo systemctl status systemd-swap"
+    echo "  swapon --show"
+fi
+
+exit 0

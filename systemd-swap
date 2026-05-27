@@ -1,0 +1,63 @@
+#!/bin/bash
+# systemd-swap: extreme simplified bash version
+# Manage a single swap file
+
+set -e
+
+# Load configuration
+CONFIG_FILE="/etc/systemd/swap.conf"
+[ -f "$CONFIG_FILE" ] && . "$CONFIG_FILE"
+
+# Defaults
+SWAP_FILE="${SWAP_FILE:-/swapfile}"
+SWAP_SIZE="${SWAP_SIZE:-2G}"
+SWAP_PRIO="${SWAP_PRIO:-50}"
+
+log() {
+    echo "[systemd-swap] $1"
+}
+
+start() {
+    if [ ! -f "$SWAP_FILE" ]; then
+        log "Creating swap file $SWAP_FILE ($SWAP_SIZE)..."
+        # fallocate is faster, but might not be supported on all FS (like btrfs without nocow)
+        # using dd for maximum compatibility if fallocate fails
+        fallocate -l "$SWAP_SIZE" "$SWAP_FILE" || dd if=/dev/zero of="$SWAP_FILE" bs=1M count=$(echo "$SWAP_SIZE" | numfmt --from=iec --to-unit=1M)
+        chmod 600 "$SWAP_FILE"
+        mkswap "$SWAP_FILE"
+    fi
+
+    if ! swapon --show | grep -q "^${SWAP_FILE} "; then
+        log "Enabling swap file $SWAP_FILE with priority $SWAP_PRIO..."
+        swapon -p "$SWAP_PRIO" "$SWAP_FILE"
+    else
+        log "Swap file $SWAP_FILE is already active."
+    fi
+    
+    # Notify systemd if running as Type=notify
+    if [ -n "$NOTIFY_SOCKET" ]; then
+        systemd-notify --ready --status="Swap file $SWAP_FILE is active"
+    fi
+}
+
+stop() {
+    if swapon --show | grep -q "^${SWAP_FILE} "; then
+        log "Disabling swap file $SWAP_FILE..."
+        swapoff "$SWAP_FILE"
+    else
+        log "Swap file $SWAP_FILE is not active."
+    fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    *)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+esac

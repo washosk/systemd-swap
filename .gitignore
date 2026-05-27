@@ -1,0 +1,35 @@
+# Build artifacts (only in output/staging dirs, not in scripts/)
+/dist/
+/sources/
+/.build/
+/*.deb
+/*.rpm
+/*.tar.gz
+/*.snap
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Temporary
+tmp/
+temp/
+.tmp/
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Snap build artifacts
+.snapcraft/
+parts/
+stage/
+prime/

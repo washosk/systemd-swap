@@ -1,0 +1,14 @@
+[Unit]
+Description=Manage a simple swap file.
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/systemd-swap start
+ExecStop=/usr/local/bin/systemd-swap stop
+RemainAfterExit=yes
+CapabilityBoundingSet=CAP_SYS_ADMIN
+ProtectSystem=full
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target
