@@ -56,10 +56,9 @@ FPM_DEB_OPTS = $(FPM_COMMON_OPTS) \
     -t deb \
     --architecture $(PKG_ARCH) \
     --deb-no-default-config-files \
-    --deb-systemd systemd-swap.service \
     --depends "base-files (>= 11)" \
-    --post-install scripts/postinst.deb \
-    --post-uninstall scripts/postrm.deb
+    --after-install scripts/postinst.deb \
+    --after-remove scripts/postrm.deb
 
 # ======================================================================
 # RPM-specific FPM options
@@ -67,9 +66,8 @@ FPM_DEB_OPTS = $(FPM_COMMON_OPTS) \
 FPM_RPM_OPTS = $(FPM_COMMON_OPTS) \
     -t rpm \
     --architecture $(PKG_ARCH_RPM) \
-    --rpm-systemd systemd-swap.service \
-    --post-install scripts/postinst.rpm \
-    --post-uninstall scripts/postrm.rpm
+    --after-install scripts/postinst.rpm \
+    --after-remove scripts/postrm.rpm
 
 # ======================================================================
 # Package file names
