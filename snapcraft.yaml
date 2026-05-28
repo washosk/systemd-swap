@@ -1,5 +1,5 @@
 name: systemd-swap
-version: "1.0.0"
+version: "1.0.1"
 summary: Simple swap file manager for systemd
 description: |
   systemd-swap is a lightweight utility to manage swap files on Linux systems.
@@ -93,4 +93,4 @@ screenshots:
     height: 768
 
 # Testing
-# Test with: snap install --devmode --dangerous systemd-swap_1.0.0_*.snap
+# Test with: snap install --devmode --dangerous systemd-swap_1.0.1_*.snap

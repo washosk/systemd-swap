@@ -13,7 +13,7 @@ SHELL := /bin/bash
 # Package metadata
 # ======================================================================
 PKG_NAME        := systemd-swap
-PKG_VERSION     := 1.0.0
+PKG_VERSION     := 1.0.1
 PKG_RELEASE     := 1
 PKG_ARCH        := amd64
 PKG_ARCH_ARM    := arm64

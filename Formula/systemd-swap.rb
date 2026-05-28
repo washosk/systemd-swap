@@ -17,7 +17,7 @@ class SystemdSwap < Formula
   homepage "https://github.com/washosk/systemd-swap"
   license "MIT"
 
-  version "1.0.0"
+  version "1.0.1"
 
   url "https://github.com/washosk/systemd-swap/releases/download/v#{version}/systemd-swap-#{version}-linux-amd64.tar.gz"
   sha256 "PLACEHOLDER_SHA256_HASH"  # Generate with: shasum -a 256 <downloaded-file>

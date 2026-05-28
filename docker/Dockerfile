@@ -26,7 +26,7 @@ FROM debian:bookworm-slim
 
 LABEL maintainer="systemd-swap <support@share.inc>"
 LABEL description="Simple swap file manager for systemd"
-LABEL version="1.0.0"
+LABEL version="1.0.1"
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \

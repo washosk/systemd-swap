@@ -7,7 +7,8 @@ if [ "$EUID" -ne 0 ]; then
    exit 1
 fi
 
-RELEASE_URL="https://github.com/washosk/systemd-swap/releases/download/v1.0.0"
+VERSION="1.0.1"
+RELEASE_URL="https://github.com/washosk/systemd-swap/releases/download/v$VERSION"
 TMPDIR=$(mktemp -d)
 trap "rm -rf $TMPDIR" EXIT
 
@@ -19,8 +20,8 @@ mkdir -p /usr/local/bin /etc/systemd /usr/lib/systemd/system
 # Download files if not available locally
 if [ ! -f "./systemd-swap" ]; then
    echo "📥 Downloading systemd-swap binary..."
-   curl -fsSL "$RELEASE_URL/systemd-swap-1.0.0-linux-amd64.tar.gz" | tar xzf - -C "$TMPDIR"
-   SOURCE_DIR="$TMPDIR/systemd-swap-1.0.0"
+   curl -fsSL "$RELEASE_URL/systemd-swap-$VERSION-linux-amd64.tar.gz" | tar xzf - -C "$TMPDIR"
+   SOURCE_DIR="$TMPDIR/systemd-swap-$VERSION"
    BIN_PATH="$SOURCE_DIR/usr/local/bin/systemd-swap"
    CONF_PATH="$SOURCE_DIR/etc/systemd/swap.conf"
    SERVICE_PATH="$SOURCE_DIR/usr/lib/systemd/system/systemd-swap.service"
