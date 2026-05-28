@@ -29,11 +29,13 @@ sudo dnf install ./systemd-swap-1.0.0-1.x86_64.rpm
 sudo systemctl start systemd-swap
 ```
 
-### Arch Linux (AUR)
+### Arch Linux (Coming soon)
+Arch Linux users can install from AUR once a PKGBUILD is created:
 ```bash
 yay -S systemd-swap
 sudo systemctl start systemd-swap
 ```
+*(PKGBUILD submission coming in a future release)*
 
 ### macOS (Homebrew)
 ```bash
@@ -197,19 +199,9 @@ brew uninstall systemd-swap
 
 ---
 
-### AUR (Arch Linux)
+### AUR (Arch Linux) — Coming Soon
 
-**Using yay**
-```bash
-yay -S systemd-swap
-```
-
-**Using makepkg**
-```bash
-git clone https://aur.archlinux.org/systemd-swap.git
-cd systemd-swap
-makepkg -si
-```
+A PKGBUILD will be submitted to the AUR once the package is stable. For now, use one of the other installation methods above.
 
 ---
 

@@ -15,7 +15,7 @@ description: |
 
 base: core22
 grade: stable
-confinement: strict
+confinement: classic
 
 architectures:
   - build-on: amd64

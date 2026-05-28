@@ -226,8 +226,8 @@ git push origin v1.0.1
 - [ ] Wait for GitHub Actions to complete
 - [ ] Verify GitHub Release was created
 - [ ] Publish to Snap Store (if needed)
-- [ ] Update AUR (if maintaining)
 - [ ] Announce release
+- [ ] Submit PKGBUILD to AUR (when ready)
 
 ## Environment Variables
 

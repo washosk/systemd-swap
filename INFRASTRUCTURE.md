@@ -195,7 +195,6 @@ make ci-build     # Full pipeline with testing
 | **Linuxbrew** | Formula | `brew install` | Linux (Linuxbrew only) |
 | **tar.gz** | `.tar.gz` | Extract + install | Any Linux system |
 | **Docker** | OCI image | `docker run` | Containers, cloud |
-| **AUR** | PKGBUILD | `yay -S` | Arch Linux |
 
 ---
 

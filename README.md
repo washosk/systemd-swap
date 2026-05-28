@@ -141,7 +141,6 @@ sudo swapon --show       # Verify
 | **Linuxbrew** | `brew install systemd-swap` | Linux only |
 | **Docker** | `docker run systemd-swap` | Containers, cloud |
 | **tar.gz** | `tar xzf *.tar.gz && install` | Any Linux |
-| **AUR** | `yay -S systemd-swap` | Arch Linux |
 
 ## Building
 
