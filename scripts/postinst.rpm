@@ -12,6 +12,8 @@ if [ $1 -eq 1 ]; then
     fi
 
     # Create swap file directory if it doesn't exist
+    CONFIG_FILE="/etc/systemd/swap.conf"
+    [ -f "$CONFIG_FILE" ] && . "$CONFIG_FILE"
     SWAP_FILE="${SWAP_FILE:-/swapfile}"
     SWAP_DIR=$(dirname "$SWAP_FILE")
     if [ ! -d "$SWAP_DIR" ]; then

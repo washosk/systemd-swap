@@ -56,8 +56,16 @@ case "$1" in
     stop)
         stop
         ;;
+    check|status)
+        if swapon --show | grep -q "^${SWAP_FILE} "; then
+            log "Swap file $SWAP_FILE is active."
+        else
+            log "Swap file $SWAP_FILE is not active."
+            exit 1
+        fi
+        ;;
     *)
-        echo "Usage: $0 {start|stop}"
+        echo "Usage: $0 {start|stop|check|status}"
         exit 1
         ;;
 esac

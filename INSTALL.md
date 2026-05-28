@@ -298,7 +298,7 @@ cd systemd-swap
 
 # Make and install
 make prepare
-sudo bash scripts/install-standalone.sh
+sudo bash install-standalone.sh
 ```
 
 **Build packages**

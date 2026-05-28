@@ -86,21 +86,6 @@ parts:
       - usr/bin/env
       - usr/share/locale
 
-# Security and permissions
-security:
-  apparmor:
-    - profile: default
-    - deny-missing-apparmor-profile: false
-
-# Snap metadata
-content: |
-  version: "1.0.0"
-  layout:
-    /etc/systemd:
-      bind: $SNAP/etc/systemd
-    /swapfile:
-      bind-file: /tmp/swapfile
-
 # Store metadata
 screenshots:
   - url: https://raw.githubusercontent.com/washosk/systemd-swap/main/docs/screenshot.png
