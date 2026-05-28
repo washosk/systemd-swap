@@ -253,23 +253,34 @@ sudo chmod 755 /usr/local/bin/systemd-swap
 
 ## Manual Installation
 
-### From tar.gz
+### From tar.gz (with bundled files)
 
-**Download**
+**Download and extract**
 ```bash
 wget https://github.com/washosk/systemd-swap/releases/download/v1.0.0/systemd-swap-1.0.0-linux-amd64.tar.gz
 tar xzf systemd-swap-1.0.0-linux-amd64.tar.gz
 cd systemd-swap-1.0.0
 ```
 
-**Install using provided script**
+**Install using bundled script**
 ```bash
 sudo bash install-standalone.sh
 ```
+The script will use the local files from the extracted directory.
 
-**Or manual installation**
+### One-line installer (auto-downloads)
+
+**Single command (no extraction needed)**
 ```bash
-# Copy files
+sudo bash <(curl -fsSL https://github.com/washosk/systemd-swap/releases/download/v1.0.0/install-standalone.sh)
+```
+The script automatically downloads the tarball and extracts files as needed.
+
+### Manual installation from tar.gz
+
+**If you prefer manual install instead of the script**
+```bash
+# From within the extracted directory:
 sudo cp usr/local/bin/systemd-swap /usr/local/bin/
 sudo cp etc/systemd/swap.conf /etc/systemd/
 sudo cp usr/lib/systemd/system/systemd-swap.service /usr/lib/systemd/system/

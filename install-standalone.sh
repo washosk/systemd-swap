@@ -7,24 +7,37 @@ if [ "$EUID" -ne 0 ]; then
    exit 1
 fi
 
+RELEASE_URL="https://github.com/washosk/systemd-swap/releases/download/v1.0.0"
+TMPDIR=$(mktemp -d)
+trap "rm -rf $TMPDIR" EXIT
+
 echo "📦 Installing systemd-swap..."
 
 # Create directories
 mkdir -p /usr/local/bin /etc/systemd /usr/lib/systemd/system
 
+# Download files if not available locally
+if [ ! -f "./systemd-swap" ]; then
+   echo "📥 Downloading systemd-swap binary..."
+   curl -fsSL "$RELEASE_URL/systemd-swap-1.0.0-linux-amd64.tar.gz" | tar xzf - -C "$TMPDIR"
+   SOURCE_DIR="$TMPDIR/systemd-swap-1.0.0"
+else
+   SOURCE_DIR="."
+fi
+
 # Install manager script
 echo "📝 Installing manager script..."
-cp systemd-swap /usr/local/bin/
+cp "$SOURCE_DIR/systemd-swap" /usr/local/bin/
 chmod 0755 /usr/local/bin/systemd-swap
 
 # Install config
 echo "⚙️  Installing configuration..."
-cp swap.conf /etc/systemd/
+cp "$SOURCE_DIR/swap.conf" /etc/systemd/
 chmod 0644 /etc/systemd/swap.conf
 
 # Install systemd service
 echo "🔧 Installing systemd service..."
-cp systemd-swap.service /usr/lib/systemd/system/
+cp "$SOURCE_DIR/systemd-swap.service" /usr/lib/systemd/system/
 chmod 0644 /usr/lib/systemd/system/systemd-swap.service
 
 # Enable and start

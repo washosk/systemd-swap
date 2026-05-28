@@ -74,7 +74,7 @@ docker run -d --privileged --name swap \
   ghcr.io/washosk/systemd-swap:1.0.0
 ```
 
-**Manual (any Linux):**
+**From tar.gz (any Linux):**
 ```bash
 wget https://github.com/washosk/systemd-swap/releases/download/v1.0.0/systemd-swap-1.0.0-linux-amd64.tar.gz
 tar xzf systemd-swap-1.0.0-linux-amd64.tar.gz
@@ -82,9 +82,9 @@ cd systemd-swap-1.0.0
 sudo bash install-standalone.sh
 ```
 
-**One-line installer (any Linux):**
+**One-line installer (any Linux, auto-downloads):**
 ```bash
-curl -fsSL https://github.com/washosk/systemd-swap/releases/download/v1.0.0/install-standalone.sh | sudo bash
+sudo bash <(curl -fsSL https://github.com/washosk/systemd-swap/releases/download/v1.0.0/install-standalone.sh)
 ```
 
 ### Configure
